@@ -5,6 +5,7 @@ import './styles/main.scss';
 import PrivateRoute from './components/PrivateRoute';
 import Home from './pages/Home';
 import PublicRoute from './components/PublicRoute';
+import SignIn from './pages/SignIn';
 
 
 function App() {
@@ -12,7 +13,7 @@ function App() {
     <BrowserRouter>
       <Switch>
         <PublicRoute path="/signin">
-           <Route>SignIn</Route>
+           <SignIn/>
         </PublicRoute>
         
         <PrivateRoute>
