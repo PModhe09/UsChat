@@ -21,7 +21,7 @@ const DashBoardToggle = () => {
             <Icon icon="dashboard"/>Profile
         </Button>
         <Drawer full ={isMobile} show={isOpen} onHide={close} placement='left'>
-               <Dashboard OnSignOut={onSignOut}/>
+               <Dashboard onSignOut={onSignOut}/>
         </Drawer>
 
     </>
