@@ -4,6 +4,7 @@ import { useModalState } from '../../misc/custom-hooks';
 import AvatarEditor from 'react-avatar-editor';
 import { database, storage } from '../../misc/firebase';
 import { useProfile } from '../../contexts/profile.context';
+import ProfileAvatar from './ProfileAvatar';
 
 const fileInputTypes=".png,.jpeg,.jpg";
 
@@ -74,6 +75,7 @@ const AvatarUploadBtn = () => {
     }
   return (
     <div className='mt-3 text-center'>
+     <ProfileAvatar src={profile.avatar} name={profile.name}  className="width-200 height-200 img-fullsize font-huge" />
       <div>
         <label htmlFor='avatar-upload' className='d-block cursor-pointer padded'>
             Select a new display
@@ -84,6 +86,7 @@ const AvatarUploadBtn = () => {
              <Modal.Title>Upload your displayer!</Modal.Title>
             </Modal.Header>
             <Modal.Body>
+            <div className="d-flex justify-content-center align-items-center h-100">
                 {img &&
                    ( <AvatarEditor
         image={img}
@@ -95,6 +98,7 @@ const AvatarUploadBtn = () => {
         rotate={0}
       />)
                 }
+                </div>
             </Modal.Body>
             <Modal.Footer>
               <Button appearance="ghost" block onClick={onUploadClick} disabled={isLoading}>
@@ -102,7 +106,9 @@ const AvatarUploadBtn = () => {
               </Button>
             </Modal.Footer>
         </Modal>
+       
       </div>    
+      {/* <ProfileAvatar src={profile.avatar} name={profile.name} /> */}
     </div>
   )
 }
