@@ -6,7 +6,7 @@ import { useRooms } from '../../contexts/rooms.context';
 
 
 const ChatRoomList = ({ aboveElHeight }) => {
-  const rooms = useRooms
+  const rooms = useRooms();
   const location = useLocation();
 
   return (
