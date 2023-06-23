@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useRef } from 'react';
+import React, { useState, useCallback, useRef,memo } from 'react';
 import {
   Button,
   Icon,
@@ -112,4 +112,4 @@ const CreateRoomBtnModal = () => {
   );
 };
 
-export default CreateRoomBtnModal;
+export default memo(CreateRoomBtnModal);
