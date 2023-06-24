@@ -5,6 +5,7 @@ import AvatarEditor from 'react-avatar-editor';
 import { database, storage } from '../../misc/firebase';
 import { useProfile } from '../../contexts/profile.context';
 import ProfileAvatar from './ProfileAvatar';
+import { getUserUpdates } from '../../misc/helpers';
 
 const fileInputTypes=".png,.jpeg,.jpg";
 
@@ -54,25 +55,39 @@ const AvatarUploadBtn = () => {
      }
         
 
-    const onUploadClick=async()=>{
-       const canvas=avatarEditorRef.current.getImageScaledToCanvas();
-       try {
+     const onUploadClick = async () => {
+        const canvas = avatarEditorRef.current.getImageScaledToCanvas();
+    
         setIsLoading(true);
-        const blob=await getBlob(canvas);
-        const avatarFileRef=storage.ref(`/profile/${profile.uid}`).child('avatar');
-        const uploadAvatarResult=await avatarFileRef.put(blob,{
-            cacheControl:`public,max-age=${3600*24*4}`
-        })
-        const downloadUrl=await uploadAvatarResult.ref.getDownloadURL();
-        const userAvatarRef=database.ref(`/profiles/${profile.uid}`).child('avatar');
-        userAvatarRef.set(downloadUrl);
-        setIsLoading(true);
-        Alert.info("Displayer has been updated",4000);
-       } catch (error) {
-          setIsLoading(true);
-          Alert.error(error.message,4000);
-       }
-    }
+        try {
+          const blob = await getBlob(canvas);
+    
+          const avatarFileRef = storage
+            .ref(`/profile/${profile.uid}`)
+            .child('avatar');
+    
+          const uploadAvatarResult = await avatarFileRef.put(blob, {
+            cacheControl: `public, max-age=${3600 * 24 * 3}`,
+          });
+    
+          const downloadUrl = await uploadAvatarResult.ref.getDownloadURL();
+    
+          const updates = await getUserUpdates(
+            profile.uid,
+            'avatar',
+            downloadUrl,
+            database
+          );
+    
+          await database.ref().update(updates);
+    
+          setIsLoading(false);
+          Alert.info('Avatar has been uploaded', 4000);
+        } catch (err) {
+          setIsLoading(false);
+          Alert.error(err.message, 4000);
+        }
+      };
   return (
     <div className='mt-3 text-center'>
      <ProfileAvatar src={profile.avatar} name={profile.name}  className="width-200 height-200 img-fullsize font-huge" />
