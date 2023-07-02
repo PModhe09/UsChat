@@ -3,6 +3,7 @@ import ProfileAvatar from '../../ProfileAvatar';
 import ProfileBtnModal from './ProfileBtnModal';
 import PresenceDot from '../../PresenceDot';
 import { useHover } from '@uidotdev/usehooks';
+import IconBtnControl from './IconBtnControl';
 
 const MessageItem = ({ message }) => {
   const { author, createdAt, text } = message;
@@ -24,6 +25,14 @@ const MessageItem = ({ message }) => {
         <TimeAgo
           datetime={createdAt}
           className="font-normal text-black-45 ml-2"
+        />
+        <IconBtnControl
+          {...(true ? { color: 'red' } : {})}
+          isVisible
+          iconName="heart"
+          tooltip="Like this message"
+          onClick={() => {}}
+          badgeContent={5}
         />
       </div>
 
