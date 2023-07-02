@@ -2,12 +2,14 @@ import TimeAgo from 'timeago-react';
 import ProfileAvatar from '../../ProfileAvatar';
 import ProfileBtnModal from './ProfileBtnModal';
 import PresenceDot from '../../PresenceDot';
+import { useHover } from '@uidotdev/usehooks';
 
 const MessageItem = ({ message }) => {
   const { author, createdAt, text } = message;
+  const [selfRef,isHover]=useHover();
 
   return (
-    <li className="padded mb-1">
+    <li className={`padded mb-1 cursor-pointer ${isHover ?'bg-black-02':''}`} ref={selfRef}>
       <div className="d-flex align-items-center font-bolder mb-1">
         <PresenceDot uid={author.uid}/>
         <ProfileAvatar
